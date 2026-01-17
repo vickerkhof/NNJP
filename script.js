@@ -1,66 +1,65 @@
-// 1. DATA - Set IDs and PDF Paths
 const articles = [
-    { id: "ed-01", date: "Jan 17, 2026", title: "Vlaamse Wiskunde Olympiade", file: "articles/jwo1_2023.pdf" }
+    { date: "Jan 17, 2026", title: "The Future of Digital Sovereignty", file: "articles/jwo1_2023.pdf" }
 ];
 
-let currentId = articles[0].id;
+let activeArticleId = articles[0].id;
+const viewer = document.getElementById('pdf-viewer');
+const titleEl = document.getElementById('active-title');
+const commentBox = document.getElementById('comment-box');
 
-function toggleForum() {
-    document.getElementById('forum-sidebar').classList.toggle('forum-hidden');
-}
-
+// 2. Load the Article and its specific comments
 function loadArticle(index) {
     const art = articles[index];
-    currentId = art.id;
+    activeArticleId = art.id; // Update the current "Room"
+    viewer.src = art.file + "#toolbar=0&navpanes=0&scrollbar=0"; // Cleaner look
+    titleEl.innerText = art.title;
     
-    // Update Header and PDF
-    document.getElementById('active-title').innerText = art.title;
-    const frame = document.getElementById('pdf-frame');
+    // Smooth scroll back to top of article
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    // 1. Force PDF to Fit Width
-    // 2. Set height to (Pages * standard A4 height) to remove internal scroll
-    frame.src = art.file + "#view=FitH&toolbar=0&navpanes=0";
-    frame.style.height = (art.pages * 1140) + "px"; 
-    
-    window.scrollTo(0, 0); // Scroll main page to top
-    loadComments();
+    loadComments(); 
 }
 
+// 3. Filter comments by activeArticleId
 async function loadComments() {
     try {
         const res = await fetch('comments.json');
-        const data = await res.json();
+        const allComments = await res.json();
         
-        // Filter: only show comments belonging to this article ID
-        const filtered = data.filter(c => c.articleId === currentId);
+        // Filter: only show comments belonging to the current article
+        const filtered = allComments.filter(c => c.articleId === activeArticleId);
         
-        const stream = document.getElementById('comment-stream');
-        stream.innerHTML = filtered.map(c => `
+        commentBox.innerHTML = filtered.length ? filtered.map(c => `
             <div class="comment">
-                <b>ANONYMOUS — ${c.timestamp}</b>
+                <small>ANONYMOUS • ${c.timestamp}</small>
                 <p>${c.text}</p>
             </div>
-        `).join('') || "<p>No discussion yet for this edition.</p>";
-    } catch (e) { console.error("Could not load comments."); }
+        `).join('') : "<p>No discussion yet for this edition. Be the first to comment.</p>";
+    } catch (e) {
+        commentBox.innerText = "Error loading discussion.";
+    }
 }
 
-// Sidebar List Generation
-const list = document.getElementById('article-list');
-articles.forEach((art, i) => {
-    let li = document.createElement('li');
-    li.innerHTML = `<button onclick="loadArticle(${i})"><strong>${art.date}</strong><br>${art.title}</button>`;
-    list.appendChild(li);
+// 4. Navigation Setup
+const listEl = document.getElementById('article-list');
+articles.forEach((art, index) => {
+    let btn = document.createElement('button');
+    btn.innerHTML = `<strong>${art.date}</strong><br><small>${art.title}</small>`;
+    btn.onclick = () => loadArticle(index);
+    listEl.appendChild(btn);
 });
 
-// Initialization
-window.onload = () => {
-    loadArticle(0);
-    document.getElementById('header-date').innerText = new Date().toDateString();
-};
-
-// Form Post Simulation (Connect to your Back-end / GitHub Action)
-document.getElementById('comment-form').onsubmit = (e) => {
+// 5. Submit Comment with Article ID
+document.getElementById('comment-form').onsubmit = async (e) => {
     e.preventDefault();
-    alert(`Submitting comment to thread: ${currentId}`);
+    const text = document.getElementById('user-msg').value;
+    
+    // In your GitHub Action, ensure you save the 'articleId' 
+    // so we know which article the comment belongs to.
+    console.log("Submitting to article:", activeArticleId);
+    
+    alert("Comment sent to " + activeArticleId + ". It will appear shortly.");
     e.target.reset();
 };
+
+window.onload = () => { if(articles.length > 0) loadArticle(0); };
