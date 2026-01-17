@@ -1,7 +1,5 @@
 const articles = [
-    { date: "Jan 17, 2026", title: "The Future of Digital Sovereignty", file: "articles/jan17.pdf" },
-    { date: "Jan 14, 2026", title: "Global Markets in Transition", file: "articles/jan14.pdf" },
-    { date: "Jan 10, 2026", title: "The Ethics of Artificial Intelligence", file: "articles/jan10.pdf" }
+    { date: "Jan 17, 2026", title: "The Future of Digital Sovereignty", file: "articles/jwo1_2023.pdf" }
 ];
 
 document.getElementById('current-date-display').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
