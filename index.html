@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Daily Dispatch | News Archive</title>
+    <title>The Archive | News Portal</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -11,43 +11,40 @@
 
 <header class="site-header">
     <div class="header-top">
-        <span class="date-today" id="current-date-display"></span>
-        <h1 class="logo">THE DAILY DISPATCH</h1>
-        <span class="edition">Digital Edition</span>
+        <span id="current-date-display"></span>
+        <h1 class="logo">THE ARCHIVE</h1>
+        <span class="edition">Continuous Edition</span>
     </div>
 </header>
 
 <main class="main-container">
     <aside class="archive-nav">
-        <h3>Archive</h3>
+        <h3>Editions</h3>
         <nav id="article-list"></nav>
     </aside>
 
     <article class="content-area">
         <div class="article-meta">
-            <h2 id="active-title">Loading Latest Edition...</h2>
-            <p class="author-line">By Editorial Staff</p>
+            <h2 id="active-title">Select an Edition</h2>
+            <p class="author-line">Press Archive</p>
         </div>
         
-        <div class="pdf-container">
-            <iframe id="pdf-viewer" src="" allow="autoplay"></iframe>
+        <div id="pdf-wrapper">
+            <iframe id="pdf-viewer" src="" scrolling="no"></iframe>
         </div>
 
         <section id="comments-section">
             <div class="section-title">
-                <h3>Forum & Discussion</h3>
-                <span class="anonymous-badge">Anonymous Guest Access</span>
+                <h3>Discussion Thread</h3>
+                <p id="comment-context">Comments for this edition</p>
             </div>
             
             <div id="comment-box">
                 </div>
 
             <form id="comment-form">
-                <textarea id="user-msg" placeholder="Share your perspective on this article..." required maxlength="500"></textarea>
-                <div class="form-footer">
-                    <small>Text only. Max 500 characters.</small>
-                    <button type="submit">Post Comment</button>
-                </div>
+                <textarea id="user-msg" placeholder="Write an anonymous response..." required maxlength="500"></textarea>
+                <button type="submit">Post to this Edition</button>
             </form>
         </section>
     </article>
