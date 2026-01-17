@@ -1,60 +1,33 @@
-:root {
-    --primary: #121212;
-    --accent: #8b0000;
-    --bg: #fdfdfd;
-    --border: #e0e0e0;
+:root { --primary: #121212; --accent: #8b0000; --bg: #ffffff; --border: #e0e0e0; }
+
+body { margin: 0; background: var(--bg); font-family: 'Source Sans Pro', sans-serif; }
+
+.site-header { 
+    border-bottom: 1px solid var(--primary); 
+    position: sticky; top: 0; background: white; z-index: 100;
+    margin-bottom: 20px;
 }
+.header-top { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 10px 20px; }
+.logo { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 0; }
 
-body {
-    margin: 0; padding: 0; background-color: var(--bg);
-    font-family: 'Source Sans Pro', sans-serif; color: var(--primary);
-}
+.main-container { display: flex; max-width: 1200px; margin: 0 auto; }
 
-/* Header & Typography */
-.site-header {
-    border-top: 4px solid var(--primary);
-    border-bottom: 1px double var(--primary);
-    margin: 20px auto; max-width: 1200px; padding: 10px 0;
-}
-.header-top { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
-.logo { font-family: 'Playfair Display', serif; font-size: 3rem; margin: 0; letter-spacing: -1px; }
-.date-today, .edition { font-weight: 600; text-transform: uppercase; font-size: 0.8rem; }
+/* Sidebar stays in place */
+.archive-nav { width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; padding-right: 20px; border-right: 1px solid var(--border); }
+.archive-nav button { display: block; width: 100%; text-align: left; background: none; border: none; padding: 15px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
 
-/* Main Layout */
-.main-container {
-    display: grid; grid-template-columns: 250px 1fr;
-    max-width: 1200px; margin: 0 auto; gap: 40px; padding: 20px;
-}
+/* Content Area */
+.content-area { flex: 1; padding: 0 40px; }
 
-.archive-nav h3 { font-family: 'Playfair Display', serif; border-bottom: 1px solid var(--primary); padding-bottom: 10px; }
-.archive-nav nav button {
-    display: block; width: 100%; text-align: left; background: none; border: none;
-    padding: 12px 0; border-bottom: 1px solid var(--border); cursor: pointer;
-    font-size: 1rem; transition: color 0.2s;
-}
-.archive-nav nav button:hover { color: var(--accent); }
+/* Continuous PDF Styling */
+#pdf-wrapper { width: 100%; margin-bottom: 50px; border: 1px solid var(--border); }
+#pdf-viewer { width: 100%; height: 1200px; border: none; display: block; }
 
-/* PDF Viewer */
-.pdf-container {
-    background: #525659; padding: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    margin-bottom: 40px; border-radius: 4px;
-}
-#pdf-viewer { width: 100%; height: 800px; border: none; }
+/* Separate Comments Window Area */
+#comments-section { background: #f9f9f9; padding: 30px; border: 1px solid var(--border); margin-bottom: 100px; }
+#comment-box { margin-bottom: 20px; min-height: 50px; }
+.comment { padding: 15px; background: white; border: 1px solid var(--border); margin-bottom: 10px; border-radius: 4px; }
+.comment small { color: var(--accent); font-weight: bold; }
 
-/* Forum */
-#comments-section { border-top: 2px solid var(--primary); padding-top: 20px; }
-.section-title { display: flex; justify-content: space-between; align-items: center; }
-.anonymous-badge { font-size: 0.7rem; background: #eee; padding: 4px 8px; border-radius: 3px; }
-
-#comment-box { margin: 20px 0; max-height: 400px; overflow-y: auto; }
-.comment { padding: 15px 0; border-bottom: 1px solid var(--border); }
-.comment b { color: var(--accent); font-size: 0.9rem; }
-.comment p { margin: 5px 0 0; line-height: 1.5; }
-
-textarea {
-    width: 100%; height: 100px; padding: 15px; border: 1px solid var(--border);
-    font-family: inherit; resize: none; box-sizing: border-box;
-}
-.form-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-button { background: var(--primary); color: white; padding: 12px 24px; border: none; font-weight: 600; cursor: pointer; }
-button:hover { background: var(--accent); }
+textarea { width: 100%; height: 80px; padding: 10px; border: 1px solid var(--border); resize: none; }
+button[type="submit"] { background: var(--primary); color: white; border: none; padding: 12px; cursor: pointer; width: 100%; margin-top: 10px; }
