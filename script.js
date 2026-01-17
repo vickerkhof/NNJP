@@ -2,18 +2,46 @@ const articles = [
     { date: "Jan 17, 2026", title: "The Future of Digital Sovereignty", file: "articles/jwo1_2023.pdf" }
 ];
 
-document.getElementById('current-date-display').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-
-const listEl = document.getElementById('article-list');
+let activeArticleId = articles[0].id;
 const viewer = document.getElementById('pdf-viewer');
 const titleEl = document.getElementById('active-title');
+const commentBox = document.getElementById('comment-box');
 
+// 2. Load the Article and its specific comments
 function loadArticle(index) {
     const art = articles[index];
-    viewer.src = art.file;
+    activeArticleId = art.id; // Update the current "Room"
+    viewer.src = art.file + "#toolbar=0&navpanes=0&scrollbar=0"; // Cleaner look
     titleEl.innerText = art.title;
+    
+    // Smooth scroll back to top of article
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    loadComments(); 
 }
 
+// 3. Filter comments by activeArticleId
+async function loadComments() {
+    try {
+        const res = await fetch('comments.json');
+        const allComments = await res.json();
+        
+        // Filter: only show comments belonging to the current article
+        const filtered = allComments.filter(c => c.articleId === activeArticleId);
+        
+        commentBox.innerHTML = filtered.length ? filtered.map(c => `
+            <div class="comment">
+                <small>ANONYMOUS • ${c.timestamp}</small>
+                <p>${c.text}</p>
+            </div>
+        `).join('') : "<p>No discussion yet for this edition. Be the first to comment.</p>";
+    } catch (e) {
+        commentBox.innerText = "Error loading discussion.";
+    }
+}
+
+// 4. Navigation Setup
+const listEl = document.getElementById('article-list');
 articles.forEach((art, index) => {
     let btn = document.createElement('button');
     btn.innerHTML = `<strong>${art.date}</strong><br><small>${art.title}</small>`;
@@ -21,25 +49,17 @@ articles.forEach((art, index) => {
     listEl.appendChild(btn);
 });
 
-// Load comments from your JSON file
-async function loadComments() {
-    try {
-        const res = await fetch('comments.json');
-        const data = await res.json();
-        const box = document.getElementById('comment-box');
-        box.innerHTML = data.map(c => `
-            <div class="comment">
-                <b>ANONYMOUS GUEST — ${c.date}</b>
-                <p>${c.text}</p>
-            </div>
-        `).join('');
-    } catch (e) {
-        document.getElementById('comment-box').innerText = "No comments yet.";
-    }
-}
-
-// Initial Load
-window.onload = () => {
-    if(articles.length > 0) loadArticle(0);
-    loadComments();
+// 5. Submit Comment with Article ID
+document.getElementById('comment-form').onsubmit = async (e) => {
+    e.preventDefault();
+    const text = document.getElementById('user-msg').value;
+    
+    // In your GitHub Action, ensure you save the 'articleId' 
+    // so we know which article the comment belongs to.
+    console.log("Submitting to article:", activeArticleId);
+    
+    alert("Comment sent to " + activeArticleId + ". It will appear shortly.");
+    e.target.reset();
 };
+
+window.onload = () => { if(articles.length > 0) loadArticle(0); };
