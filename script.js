@@ -1,77 +1,58 @@
-// 1. YOUR DATA - Every article needs a unique ID
+// 1. DATA - Set IDs and PDF Paths
 const articles = [
-    { 
-        id: "jan-17-26", 
-        date: "Jan 17, 2026", 
-        title: "The Shift in Global Energy", 
-        file: "articles/energy_report.pdf" 
-    },
-    { 
-        id: "jan-14-26", 
-        date: "Jan 14, 2026", 
-        title: "Advancements in Robotics", 
-        file: "articles/robotics_news.pdf" 
-    }
+    { id: "ed-01", date: "Jan 17, 2026", title: "Vlaamse Wiskunde Olympiade", file: "articles/jwo1_2023.pdf" }
 ];
 
-let activeArticleId = articles[0].id;
-const viewer = document.getElementById('pdf-viewer');
-const titleEl = document.getElementById('active-title');
-const commentBox = document.getElementById('comment-box');
+let activeId = articles[0].id;
 
-// 2. Load the Article and its specific comments
+// 2. Toggle Sidebar Forum
+function toggleComments() {
+    document.getElementById('comment-sidebar').classList.toggle('sidebar-hidden');
+}
+
+// 3. Load Article & Specific Forum
 function loadArticle(index) {
     const art = articles[index];
-    activeArticleId = art.id; // Update the current "Room"
-    viewer.src = art.file + "#toolbar=0&navpanes=0&scrollbar=0"; // Cleaner look
-    titleEl.innerText = art.title;
+    activeId = art.id;
     
-    // Smooth scroll back to top of article
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // The "#view=FitH" tells the PDF to fit to the width, allowing continuous vertical scroll
+    document.getElementById('pdf-viewer').src = art.file + "#view=FitH&toolbar=0&navpanes=0";
+    document.getElementById('active-title').innerText = art.title;
     
-    loadComments(); 
+    loadCommentsForArticle();
 }
 
-// 3. Filter comments by activeArticleId
-async function loadComments() {
+async function loadCommentsForArticle() {
     try {
         const res = await fetch('comments.json');
-        const allComments = await res.json();
+        const data = await res.json();
+        const filtered = data.filter(c => c.articleId === activeId);
         
-        // Filter: only show comments belonging to the current article
-        const filtered = allComments.filter(c => c.articleId === activeArticleId);
-        
-        commentBox.innerHTML = filtered.length ? filtered.map(c => `
+        const area = document.getElementById('comment-display-area');
+        area.innerHTML = filtered.map(c => `
             <div class="comment">
-                <small>ANONYMOUS • ${c.timestamp}</small>
+                <small><b>GUEST</b> — ${c.date}</small>
                 <p>${c.text}</p>
             </div>
-        `).join('') : "<p>No discussion yet for this edition. Be the first to comment.</p>";
-    } catch (e) {
-        commentBox.innerText = "Error loading discussion.";
-    }
+        `).join('') || "<p>No comments for this edition.</p>";
+    } catch (e) { console.error("JSON fetch failed."); }
 }
 
-// 4. Navigation Setup
-const listEl = document.getElementById('article-list');
-articles.forEach((art, index) => {
-    let btn = document.createElement('button');
-    btn.innerHTML = `<strong>${art.date}</strong><br><small>${art.title}</small>`;
-    btn.onclick = () => loadArticle(index);
-    listEl.appendChild(btn);
+// 4. Initialize Site
+const list = document.getElementById('article-list');
+articles.forEach((art, i) => {
+    let li = document.createElement('li');
+    li.innerHTML = `<button onclick="loadArticle(${i})"><strong>${art.date}</strong><br>${art.title}</button>`;
+    list.appendChild(li);
 });
 
-// 5. Submit Comment with Article ID
-document.getElementById('comment-form').onsubmit = async (e) => {
+document.getElementById('comment-form').onsubmit = (e) => {
     e.preventDefault();
-    const text = document.getElementById('user-msg').value;
-    
-    // In your GitHub Action, ensure you save the 'articleId' 
-    // so we know which article the comment belongs to.
-    console.log("Submitting to article:", activeArticleId);
-    
-    alert("Comment sent to " + activeArticleId + ". It will appear shortly.");
+    alert("Comment submitted for " + activeId + ". This triggers your GitHub Action.");
     e.target.reset();
 };
 
-window.onload = () => { if(articles.length > 0) loadArticle(0); };
+window.onload = () => {
+    loadArticle(0);
+    document.getElementById('date-label').innerText = new Date().toDateString();
+};
