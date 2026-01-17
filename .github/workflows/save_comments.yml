@@ -1,0 +1,25 @@
+name: Save Comment
+on:
+  repository_dispatch:
+    types: [new-comment]
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Update comments.json
+        run: |
+          DATE=$(date +'%Y-%m-%d %H:%M')
+          TEXT="${{ github.event.client_payload.text }}"
+          # Use jq to append the new comment to the JSON array
+          jq ". += [{\"date\": \"$DATE\", \"text\": \"$TEXT\"}]" comments.json > temp.json && mv temp.json comments.json
+      - name: Commit changes
+        run: |
+          git config --global user.name 'CommentBot'
+          git config --global user.email 'bot@github.com'
+          git add comments.json
+          git commit -m "New anonymous comment added"
+          git push
