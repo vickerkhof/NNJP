@@ -1,5 +1,17 @@
+// 1. YOUR DATA - Every article needs a unique ID
 const articles = [
-    { date: "Jan 17, 2026", title: "The Future of Digital Sovereignty", file: "articles/jwo1_2023.pdf" }
+    { 
+        id: "jan-17-26", 
+        date: "Jan 17, 2026", 
+        title: "The Shift in Global Energy", 
+        file: "articles/energy_report.pdf" 
+    },
+    { 
+        id: "jan-14-26", 
+        date: "Jan 14, 2026", 
+        title: "Advancements in Robotics", 
+        file: "articles/robotics_news.pdf" 
+    }
 ];
 
 let activeArticleId = articles[0].id;
