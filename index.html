@@ -3,52 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Archive | News Portal</title>
+    <title>The Archive | News</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header class="site-header">
-    <div class="header-top">
-        <span id="current-date-display"></span>
+    <div class="header-content">
+        <span id="header-date"></span>
         <h1 class="logo">THE ARCHIVE</h1>
-        <span class="edition">Continuous Edition</span>
+        <button id="toggle-forum" onclick="toggleForum()">Open Discussion</button>
     </div>
 </header>
 
-<main class="main-container">
-    <aside class="archive-nav">
+<div class="main-layout">
+    <nav class="archive-nav">
         <h3>Editions</h3>
-        <nav id="article-list"></nav>
-    </aside>
+        <ul id="article-list"></ul>
+    </nav>
 
-    <article class="content-area">
-        <div class="article-meta">
-            <h2 id="active-title">Select an Edition</h2>
-            <p class="author-line">Press Archive</p>
+    <main class="viewer-container">
+        <div id="article-header">
+            <h2 id="active-title">Select an article</h2>
         </div>
         
-        <div id="pdf-wrapper">
-            <iframe id="pdf-viewer" src="" scrolling="no"></iframe>
+        <div class="pdf-scroll-container">
+            <iframe id="pdf-frame" src="" scrolling="no"></iframe>
         </div>
+    </main>
 
-        <section id="comments-section">
-            <div class="section-title">
-                <h3>Discussion Thread</h3>
-                <p id="comment-context">Comments for this edition</p>
+    <aside id="forum-sidebar" class="forum-hidden">
+        <div class="forum-header">
+            <h3>Forum</h3>
+            <button onclick="toggleForum()" class="close-btn">×</button>
+        </div>
+        <div id="comment-stream">
             </div>
-            
-            <div id="comment-box">
-                </div>
-
-            <form id="comment-form">
-                <textarea id="user-msg" placeholder="Write an anonymous response..." required maxlength="500"></textarea>
-                <button type="submit">Post to this Edition</button>
-            </form>
-        </section>
-    </article>
-</main>
+        <form id="comment-form">
+            <textarea id="comment-text" placeholder="Write an anonymous comment..." required maxlength="500"></textarea>
+            <button type="submit">Post to Thread</button>
+        </form>
+    </aside>
+</div>
 
 <script src="script.js"></script>
 </body>
