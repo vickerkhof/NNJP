@@ -1,95 +1,33 @@
-/* Transparent Circle Buttons */
-.book-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 60px;
-    height: 60px;
-    background-color: transparent; /* Fully transparent initially */
-    border: 2px solid rgba(0,0,0,0.2);
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-    z-index: 10;
-}
+:root { --primary: #121212; --accent: #8b0000; --bg: #ffffff; --border: #e0e0e0; }
 
-.book-nav-btn:hover {
-    background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent on hover */
-}
+body { margin: 0; background: var(--bg); font-family: 'Source Sans Pro', sans-serif; }
 
-.left-nav { left: -70px; }
-.right-nav { right: -70px; }
-
-/* Arrow icon (Indented triangle/Chevron) */
-.arrow-icon {
-    width: 15px;
-    height: 15px;
-    border-top: 3px solid #333;
-    border-right: 3px solid #333;
-    display: inline-block;
-}
-
-.left-arrow { transform: rotate(-135deg); margin-left: 5px; }
-.right-arrow { transform: rotate(45deg); margin-right: 5px; }
-
-/* Date formatting */
-#current-date-display {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 600;
-}
-/* Navigation Buttons: Transparent circles */
-.book-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
-    background-color: transparent; /* Transparent circle */
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-    z-index: 10;
-}
-
-/* Semi-transparent on hover */
-.book-nav-btn:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.left-nav { left: -60px; }
-.right-nav { right: -60px; }
-
-/* Arrow icon (Triangle without tail) */
-.arrow-icon {
-    width: 0; 
-    height: 0; 
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-}
-
-.left-arrow {
-    border-right: 12px solid #333; /* The triangle */
-    margin-right: 4px;
-}
-
-.right-arrow {
-    border-left: 12px solid #333; /* The triangle */
-    margin-left: 4px;
-}
-
-/* Original Comment Box Formatting */
-#comment-box {
-    background-color: #f5f5f5; /* Slightly darker background */
-    border: 1px solid #ddd;
-    padding: 15px;
-    height: 300px;
-    overflow-y: auto;
+.site-header { 
+    border-bottom: 1px solid var(--primary); 
+    position: sticky; top: 0; background: white; z-index: 100;
     margin-bottom: 20px;
 }
+.header-top { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 10px 20px; }
+.logo { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 0; }
+
+.main-container { display: flex; max-width: 1200px; margin: 0 auto; }
+
+/* Sidebar stays in place */
+.archive-nav { width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; padding-right: 20px; border-right: 1px solid var(--border); }
+.archive-nav button { display: block; width: 100%; text-align: left; background: none; border: none; padding: 15px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+
+/* Content Area */
+.content-area { flex: 1; padding: 0 40px; }
+
+/* Continuous PDF Styling */
+#pdf-wrapper { width: 100%; margin-bottom: 50px; border: 1px solid var(--border); }
+#pdf-viewer { width: 100%; height: 1200px; border: none; display: block; }
+
+/* Separate Comments Window Area */
+#comments-section { background: #f9f9f9; padding: 30px; border: 1px solid var(--border); margin-bottom: 100px; }
+#comment-box { margin-bottom: 20px; min-height: 50px; }
+.comment { padding: 15px; background: white; border: 1px solid var(--border); margin-bottom: 10px; border-radius: 4px; }
+.comment small { color: var(--accent); font-weight: bold; }
+
+textarea { width: 100%; height: 80px; padding: 10px; border: 1px solid var(--border); resize: none; }
+button[type="submit"] { background: var(--primary); color: white; border: none; padding: 12px; cursor: pointer; width: 100%; margin-top: 10px; }
