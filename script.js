@@ -9,15 +9,18 @@ let pdfDoc = null,
 const canvas = document.getElementById('pdf-viewer'),
     ctx = canvas.getContext('2d');
 
+// Load PDF function for multiple articles
 function loadPDF(fileName) {
     const url = `articles/${fileName}`;
-    document.getElementById('active-title').textContent = fileName.replace('.pdf', '');
+    document.getElementById('active-title').textContent = fileName.replace('.pdf', '').replace(/_/g, ' ');
 
     pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
         pdfDoc = pdfDoc_;
         document.getElementById('page-count').textContent = pdfDoc.numPages;
         pageNum = 1;
         renderPage(pageNum);
+    }).catch(err => {
+        console.error("Error loading PDF: ", err);
     });
 }
 
@@ -44,6 +47,7 @@ const queueRenderPage = num => {
     if (pageIsRendering) { pageNumIsPending = num; } else { renderPage(num); }
 };
 
+// Controls
 document.getElementById('prev-page').addEventListener('click', () => {
     if (pageNum <= 1) return;
     pageNum--;
@@ -56,5 +60,10 @@ document.getElementById('next-page').addEventListener('click', () => {
     queueRenderPage(pageNum);
 });
 
-// Load your actual file
-loadPDF('jwo1_2023.pdf');
+// Initial Load
+window.addEventListener('load', () => {
+    loadPDF('jwo1_2023.pdf');
+    document.getElementById('current-date-display').textContent = new Date().toLocaleDateString('en-GB', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+});
