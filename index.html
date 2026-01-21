@@ -4,43 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Archive | News Portal</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        /* Basic styling for the new controls */
-        #pdf-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin: 10px 0;
-            font-family: 'Source Sans Pro', sans-serif;
-        }
-        .nav-btn {
-            background: #333;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .nav-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        #pdf-wrapper {
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            background: #eee;
-            border: 1px solid #ddd;
-        }
-        canvas {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 
@@ -56,8 +22,8 @@
     <aside class="archive-nav">
         <h3>Editions</h3>
         <nav id="article-list">
-            <button data-filename="jwo1_2023.pdf">jwo1_2023</button>
-        </nav>
+            <button class="edition-btn" data-file="jwo1_2023">JWO ronde 1 2023</button>
+            </nav>
     </aside>
 
     <article class="content-area">
@@ -66,14 +32,13 @@
             <p class="author-line">Press Archive</p>
         </div>
         
-        <div id="pdf-controls">
-            <button id="prev-page" class="nav-btn">← Previous</button>
-            <span>Page <span id="page-num">0</span> of <span id="page-count">0</span></span>
-            <button id="next-page" class="nav-btn">Next →</button>
-        </div>
-
         <div id="pdf-wrapper">
-            <canvas id="pdf-canvas"></canvas>
+            <div style="text-align: center; margin-bottom: 10px;">
+                <button id="prev-page">← Previous Page</button>
+                <span id="page-info">Page <span id="page-num"></span> of <span id="page-count"></span></span>
+                <button id="next-page">Next Page →</button>
+            </div>
+            <canvas id="pdf-viewer" style="border: 1px solid #ccc; width: 100%; display: block; margin: 0 auto;"></canvas>
         </div>
 
         <section id="comments-section">
