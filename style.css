@@ -71,3 +71,9 @@ button[type="submit"] { background: var(--primary); color: white; border: none; 
 .pdf-arrow.right {
     right: 15px;
 }
+
+#pdf-canvas {
+    display: block;
+    width: 100%;
+}
+
