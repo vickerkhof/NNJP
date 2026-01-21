@@ -34,7 +34,7 @@
                 <div class="pdf-arrow left" id="prev-page">&#10094;</div>
                 <div class="pdf-arrow right" id="next-page">&#10095;</div>
             </div>
-            <iframe id="pdf-viewer" src="" scrolling="no"></iframe>
+            <canvas id="pdf-canvas"></canvas>
         </div>
 
         <section id="comments-section">
@@ -53,7 +53,8 @@
         </section>
     </article>
 </main>
-
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
