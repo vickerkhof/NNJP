@@ -40,3 +40,56 @@
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 600;
 }
+/* Navigation Buttons: Transparent circles */
+.book-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background-color: transparent; /* Transparent circle */
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+/* Semi-transparent on hover */
+.book-nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.left-nav { left: -60px; }
+.right-nav { right: -60px; }
+
+/* Arrow icon (Triangle without tail) */
+.arrow-icon {
+    width: 0; 
+    height: 0; 
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
+.left-arrow {
+    border-right: 12px solid #333; /* The triangle */
+    margin-right: 4px;
+}
+
+.right-arrow {
+    border-left: 12px solid #333; /* The triangle */
+    margin-left: 4px;
+}
+
+/* Original Comment Box Formatting */
+#comment-box {
+    background-color: #f5f5f5; /* Slightly darker background */
+    border: 1px solid #ddd;
+    padding: 15px;
+    height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
