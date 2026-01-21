@@ -13,7 +13,7 @@ const articles = [
         id: "jan-17-26", 
         date: "Jan 17, 2026", 
         title: "JWO ronde 1 2023", 
-        file: "articles/jwo1_2023.pdf" 
+        file: "articles/jwo1_2023.pdf"  
     }
 ];
 
