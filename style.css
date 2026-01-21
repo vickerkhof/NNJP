@@ -1,33 +1,219 @@
-:root { --primary: #121212; --accent: #8b0000; --bg: #ffffff; --border: #e0e0e0; }
-
-body { margin: 0; background: var(--bg); font-family: 'Source Sans Pro', sans-serif; }
-
-.site-header { 
-    border-bottom: 1px solid var(--primary); 
-    position: sticky; top: 0; background: white; z-index: 100;
-    margin-bottom: 20px;
+/* --- Global Styles --- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    background-color: #fdfdfb; /* Traditional newsprint off-white */
+    color: #1a1a1a;
 }
-.header-top { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 10px 20px; }
-.logo { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 0; }
 
-.main-container { display: flex; max-width: 1200px; margin: 0 auto; }
+/* --- Header & Branding --- */
+.site-header {
+    border-bottom: 4px double #333;
+    padding: 20px;
+    background: #fff;
+}
 
-/* Sidebar stays in place */
-.archive-nav { width: 250px; position: sticky; top: 80px; height: calc(100vh - 100px); overflow-y: auto; padding-right: 20px; border-right: 1px solid var(--border); }
-.archive-nav button { display: block; width: 100%; text-align: left; background: none; border: none; padding: 15px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-/* Content Area */
-.content-area { flex: 1; padding: 0 40px; }
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin: 0;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
 
-/* Continuous PDF Styling */
-#pdf-wrapper { width: 100%; margin-bottom: 50px; border: 1px solid var(--border); }
-#pdf-viewer { width: 100%; height: 1200px; border: none; display: block; }
+.edition, #current-date-display {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
 
-/* Separate Comments Window Area */
-#comments-section { background: #f9f9f9; padding: 30px; border: 1px solid var(--border); margin-bottom: 100px; }
-#comment-box { margin-bottom: 20px; min-height: 50px; }
-.comment { padding: 15px; background: white; border: 1px solid var(--border); margin-bottom: 10px; border-radius: 4px; }
-.comment small { color: var(--accent); font-weight: bold; }
+/* --- Layout --- */
+.main-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
 
-textarea { width: 100%; height: 80px; padding: 10px; border: 1px solid var(--border); resize: none; }
-button[type="submit"] { background: var(--primary); color: white; border: none; padding: 12px; cursor: pointer; width: 100%; margin-top: 10px; }
+/* --- Sidebar Navigation --- */
+.archive-nav {
+    border-right: 1px solid #ddd;
+    padding: 20px;
+    background: #f9f9f9;
+}
+
+.archive-nav h3 {
+    font-family: 'Playfair Display', serif;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+}
+
+#article-list button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 10px;
+    font-family: inherit;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+#article-list button:hover {
+    background: #eee;
+}
+
+/* --- Content Area --- */
+.content-area {
+    padding: 40px;
+    background: #fff;
+}
+
+.article-meta {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#active-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.author-line {
+    font-style: italic;
+    color: #666;
+}
+
+/* --- PDF Book-Style Controls --- */
+#pdf-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    padding: 15px;
+    background-color: #f4f1ea;
+    border: 1px solid #dcdcdc;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+}
+
+.nav-btn {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background-color: #000;
+    transform: translateY(-1px);
+}
+
+.nav-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#page-num, #page-count {
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* --- PDF Viewing Area --- */
+#pdf-wrapper {
+    width: 100%;
+    min-height: 800px;
+    background-color: #e4e4e4;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 0;
+    border: 1px solid #dcdcdc;
+    overflow-x: auto;
+}
+
+canvas {
+    background-color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    max-width: 95%;
+    height: auto !important;
+}
+
+/* --- Comments Section --- */
+#comments-section {
+    margin-top: 50px;
+    border-top: 2px solid #333;
+    padding-top: 30px;
+}
+
+.section-title h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+#comment-box {
+    margin: 20px 0;
+    max-height: 400px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #eee;
+}
+
+#comment-form textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    margin-bottom: 10px;
+}
+
+#comment-form button {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#comment-form button:hover {
+    background: #000;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .main-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .archive-nav {
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .logo {
+        font-size: 2rem;
+    }
+}
