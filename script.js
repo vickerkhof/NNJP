@@ -3,16 +3,12 @@ const articles = [
     { 
         id: "jan-17-26", 
         date: "Jan 17, 2026", 
-        title: "The Shift in Global Energy", 
-        file: "articles/energy_report.pdf" 
-    },
-    { 
-        id: "jan-14-26", 
-        date: "Jan 14, 2026", 
-        title: "Advancements in Robotics", 
-        file: "articles/robotics_news.pdf" 
+        title: "JWO ronde 1 2023", 
+        file: "articles/jwo1_2023.pdf" 
     }
 ];
+let currentPage = 1;
+
 
 let activeArticleId = articles[0].id;
 const viewer = document.getElementById('pdf-viewer');
@@ -22,14 +18,14 @@ const commentBox = document.getElementById('comment-box');
 // 2. Load the Article and its specific comments
 function loadArticle(index) {
     const art = articles[index];
-    activeArticleId = art.id; // Update the current "Room"
-    viewer.src = art.file + "#toolbar=0&navpanes=0&scrollbar=0"; // Cleaner look
+    activeArticleId = art.id;
+    currentPage = 1;
+
+    viewer.src = `${art.file}#page=${currentPage}&toolbar=0&navpanes=0&scrollbar=0`;
     titleEl.innerText = art.title;
-    
-    // Smooth scroll back to top of article
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    
-    loadComments(); 
+    loadComments();
 }
 
 // 3. Filter comments by activeArticleId
@@ -75,3 +71,15 @@ document.getElementById('comment-form').onsubmit = async (e) => {
 };
 
 window.onload = () => { if(articles.length > 0) loadArticle(0); };
+
+document.getElementById('next-page').onclick = () => {
+    currentPage++;
+    viewer.src = viewer.src.replace(/page=\d+/, `page=${currentPage}`);
+};
+
+document.getElementById('prev-page').onclick = () => {
+    if (currentPage > 1) {
+        currentPage--;
+        viewer.src = viewer.src.replace(/page=\d+/, `page=${currentPage}`);
+    }
+};
