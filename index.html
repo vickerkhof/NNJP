@@ -6,7 +6,6 @@
     <title>The Archive | News Portal</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 
@@ -21,9 +20,7 @@
 <main class="main-container">
     <aside class="archive-nav">
         <h3>Editions</h3>
-        <nav id="article-list">
-            <button onclick="loadPDF('jwo1_2023.pdf')">JWO1 2023</button>
-        </nav>
+        <nav id="article-list"></nav>
     </aside>
 
     <article class="content-area">
@@ -32,21 +29,8 @@
             <p class="author-line">Press Archive</p>
         </div>
         
-        <div id="pdf-wrapper" style="position: relative; width: 60%; margin: 0 auto; display: flex; justify-content: center; background: transparent;">
-            
-            <button id="prev-page" class="book-nav-btn left-nav">
-                <span class="arrow-icon left-arrow"></span>
-            </button>
-            
-            <canvas id="pdf-viewer" style="border: 1px solid #ccc; max-width: 100%; display: block;"></canvas>
-            
-            <button id="next-page" class="book-nav-btn right-nav">
-                <span class="arrow-icon right-arrow"></span>
-            </button>
-        </div>
-
-        <div id="page-counter-text" style="text-align: center; font-family: 'Source Sans Pro'; margin-top: 15px;">
-            Page <span id="page-num"></span> of <span id="page-count"></span>
+        <div id="pdf-wrapper">
+            <iframe id="pdf-viewer" src="" scrolling="no"></iframe>
         </div>
 
         <section id="comments-section">
@@ -55,7 +39,8 @@
                 <p id="comment-context">Comments for this edition</p>
             </div>
             
-            <div id="comment-box"></div>
+            <div id="comment-box">
+                </div>
 
             <form id="comment-form">
                 <textarea id="user-msg" placeholder="Write an anonymous response..." required maxlength="500"></textarea>
