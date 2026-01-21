@@ -22,7 +22,7 @@
     <aside class="archive-nav">
         <h3>Editions</h3>
         <nav id="article-list">
-            <button class="edition-btn" data-file="jwo1_2023">JWO ronde 1 2023</button>
+            <button onclick="loadPDF('jwo1_2023.pdf')">JWO ronde 1 2023</button>
             </nav>
     </aside>
 
@@ -35,7 +35,7 @@
         <div id="pdf-wrapper">
             <div style="text-align: center; margin-bottom: 10px;">
                 <button id="prev-page">← Previous Page</button>
-                <span id="page-info">Page <span id="page-num"></span> of <span id="page-count"></span></span>
+                <span id="page-info">Page <span id="page-num">0</span> of <span id="page-count">0</span></span>
                 <button id="next-page">Next Page →</button>
             </div>
             <canvas id="pdf-viewer" style="border: 1px solid #ccc; width: 100%; display: block; margin: 0 auto;"></canvas>
